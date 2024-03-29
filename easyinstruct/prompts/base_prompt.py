@@ -11,6 +11,7 @@ from easyinstruct.utils.api import (
     get_openai_base_url,
 )
 from easyinstruct.engines import BaseEngine
+import ollama
 
 
 class BasePrompt:
@@ -20,10 +21,21 @@ class BasePrompt:
         self.prompt = None
         self.response = None
         self.output = None
+        self.chat_model_response = None
 
     def build_prompt(self, prompt: str):
         self.prompt = prompt
         return self.prompt
+    
+    def get_local_ollama_llm_result(
+        self, 
+        which_model_in_ollama: str,
+    ):
+        messages = [{'role': 'user', 'content': self.prompt}]
+        response = ollama.chat(which_model_in_ollama, messages)
+        self.chat_model_response = response.strip()
+        return response
+        
 
     def get_openai_result(
         self,

@@ -5,6 +5,7 @@ from easyinstruct import (
     SelfInstructGenerator,
     EvolInstructGenerator,
     BacktranslationGenerator,
+    SelfInstructGeneratorWM
 )
 from easyinstruct import (
     LengthSelector,
@@ -44,6 +45,11 @@ def main(args):
         elif "BacktranslationGenerator" in config["generator"]:
             generator = BacktranslationGenerator(
                 **config["generator"]["BacktranslationGenerator"]
+            )
+        # linjh add
+        elif "SelfInstructGeneratorWM" in config["generator"]:
+            generator = SelfInstructGeneratorWM(
+                **config["generator"]["SelfInstructGeneratorWM"]
             )
         else:
             raise NotImplementedError(
